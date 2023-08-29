@@ -1,43 +1,48 @@
 import ListView from './listView';
 import modalView from './modalView';
 import * as model from './model';
+import { swiper } from './swiper';
 
 window.Webflow ||= [];
 window.Webflow.push(() => {
-  const controlListings = async function () {
-    try {
-      // 1) Fetch listings
-      await model.fetchListings();
+  swiper();
 
-      // 2) Clear list
-      ListView.clear();
+  // const controlListings = async function () {
+  //   try {
+  //     // 1) Fetch listings
+  //     await model.fetchListings();
 
-      // 3) Render listings and update results count
-      ListView.renderListings(model.state.listings);
-      ListView.updateResultsElement(model.state.resultsCount);
+  //     // 2) Clear list
+  //     ListView.clear();
 
-      // 4) Remove list loader
-      ListView.toggleLoader();
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //     // 3) Render listings and update results count
+  //     ListView.renderListings(model.state.listings);
+  //     ListView.updateResultsElement(model.state.resultsCount);
 
-  const showListing = function (id) {
-    // 1) Get listing obj from id
-    const listing = model.getListing(id);
+  //     // 4) Remove list loader
+  //     ListView.toggleLoader();
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
-    // 2) Render items
-    modalView.render(listing);
+  // const showListing = function (id) {
+  //   // 1) Get listing obj from id
+  //   const listing = model.getListing(id);
 
-    // 3) Show modal
-    modalView.showModal();
-  };
+  //   // 2) Render items
+  //   modalView.render(listing);
 
-  function init() {
-    ListView.addHandlerInit(controlListings);
-    ListView.addHandlerListingId(showListing);
-  }
+  //   // 3) Show modal
+  //   modalView.showModal();
+  // };
 
-  init();
+  // function init() {
+  //   ListView.addHandlerInit(controlListings);
+  //   ListView.addHandlerListingId(showListing);
+  // }
+
+  // init();
 });
+
+/*<script defer src="https://cdn.jsdelivr.net/gh/niklashansson/tentacle.se@6a3c2d30319916d63e811e9d2e51fbf265f3230b/dist/index.min.js"></script>*/
