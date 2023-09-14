@@ -1,1 +1,1 @@
-export const API_URL = 'https://dev.tentacle.se/api/public-deals';
+export const API_URL = 'https://app.tentacle.se/api/public-deals';
