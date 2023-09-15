@@ -29,7 +29,7 @@ export const fetchListings = async function () {
   try {
     const res = await fetch(API_URL, {
       headers: {
-        referrer: 'https://dev.tentacle.se',
+        referrer: 'https://app.tentacle.se',
         'Content-Type': 'application/javascript',
       },
     });
