@@ -1,13 +1,19 @@
+import numeral from 'numeral';
+
 export const deals = async function () {
   const tableEl = document.querySelector('[tentacle-deals-element="table"]');
   if (!tableEl) return;
+  const resultTextEl = document.querySelector('[tentacle-deals-element="results"]');
 
   // Check if swedish or english
   const paths: Array<string> = window.location.pathname.split('/');
-  const lang: string = paths.find((path) => 'en') ? 'en' : 'sv';
+  const lang: string = paths.find((path: string) => 'en') ? 'en' : 'sv';
 
   // Get deals in swedish or english
   const deals = await fetchDeals(lang);
+
+  // Update results number element
+  showResults(deals.length);
 
   // Get number of deals to display
   const limit = getDealsLimit();
@@ -40,14 +46,21 @@ export const deals = async function () {
     if (limit) return +limit;
   }
 
-  // Formats square meter numbers >= 1000
-  function formatSqm(number) {
-    if (number >= 1000) {
-      const origNumber = number.toString().split('');
-      origNumber.splice(1, 0, ' ');
+  function showResults(resultNum: number) {
+    if (!resultTextEl) return;
 
-      const formattedNumber = origNumber.join('');
-      return formattedNumber;
+    resultTextEl.textContent = resultNum.toString();
+    resultTextEl.classList.remove('is-active');
+  }
+
+  // Formats square meter numbers >= 1000
+  function formatSqm(number: number) {
+    if (number >= 1000) {
+      const string =
+        lang === 'en'
+          ? numeral(number).format('0,0')
+          : numeral(number).format('0,0').replace(',', ' ').replace(',', ' ');
+      return string;
     }
     return number;
   }
@@ -162,12 +175,6 @@ export const deals = async function () {
   function clearModalList() {
     modalList.innerHTML = '';
   }
-
-  // function appendDealModal(deal) {
-  //   const div = document.createElement('div');
-  //   div.classList.add('deal-modal_item');
-
-  // }
 
   // Deal modal
   tableEl.addEventListener('click', (e) => {
