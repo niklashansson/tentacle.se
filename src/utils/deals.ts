@@ -9,6 +9,9 @@ export const deals = async function () {
   const paths: Array<string> = window.location.pathname.split('/');
   const lang: string = paths.find((path: string) => 'en') ? 'en' : 'sv';
 
+  // Check if landscape/portrait mobile
+  const isMobile: string = window.innerWidth <= 767 ? true : false;
+
   // Get deals in swedish or english
   const deals = await fetchDeals(lang);
 
@@ -22,19 +25,32 @@ export const deals = async function () {
   limit ? appendDeals(tableEl, deals.slice(0, limit)) : appendDeals(tableEl, deals);
 
   function appendDeals(tableEl, deals) {
+    const geographyTitle = lang === 'sv' ? 'Geografi' : 'Geography';
+    const propertyTypeTitle = lang === 'sv' ? 'Fastighetsslag' : 'Property Type';
+    const indicativeYieldTitle = lang === 'sv' ? 'Indikativ Yield' : 'Indicative Yield';
+    const areaTitle = lang === 'sv' ? 'Area kvm' : 'Area sqm';
+
     deals.forEach((deal) => {
       const tr = document.createElement('tr');
       tr.classList.add(`deals-table_row`);
       tr.style.cursor = 'pointer';
       tr.setAttribute('deal-id', deal.id);
-      tr.innerHTML = `<td class="deals-table_cell">${deal.county}</td>
-      <td class="deals-table_cell">${deal.property_types.join(', ')}</td>
+      tr.innerHTML = `<td class="deals-table_cell">${
+        isMobile ? `<span class="text-size-small text-color-grey">${geographyTitle}</span><br>` : ''
+      }${deal.county}</td>
+      <td class="deals-table_cell">${
+        isMobile
+          ? `<span class="text-size-small text-color-grey">${propertyTypeTitle}</span><br>`
+          : ''
+      }${deal.property_types.join(', ')}</td>
       <td class="deals-table_cell text-size-regular">${
-        deal.yield_range ? deal.yield_range.join(' - ') + '%' : '-'
-      }</td>
+        isMobile
+          ? `<span class="text-size-small text-color-grey">${indicativeYieldTitle}</span><br>`
+          : ''
+      }${deal.yield_range ? deal.yield_range.join(' - ') + '%' : '-'}</td>
       <td class="deals-table_cell text-size-regular">${
-        deal.sqm_range ? deal.sqm_range.map((sqm) => formatSqm(sqm)).join(' - ') : ''
-      }</td>`;
+        isMobile ? `<span class="text-size-small text-color-grey">${areaTitle}</span><br>` : ''
+      }${deal.sqm_range ? deal.sqm_range.map((sqm) => formatSqm(sqm)).join(' - ') : ''}</td>`;
       tableEl.appendChild(tr);
     });
   }
