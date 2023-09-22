@@ -10,16 +10,16 @@ export const deals = async function () {
   const lang: string = paths.find((path: string) => 'en') ? 'en' : 'sv';
 
   // Check if landscape/portrait mobile
-  const isMobile: string = window.innerWidth <= 767 ? true : false;
+  const isMobile: boolean = window.innerWidth <= 767 ? true : false;
+
+  // Get number of deals to display
+  const limit = getDealsLimit() || null;
 
   // Get deals in swedish or english
-  const deals = await fetchDeals(lang);
+  const deals = await fetchDeals(lang, limit);
 
   // Update results number element
   showResults(deals.length);
-
-  // Get number of deals to display
-  const limit = getDealsLimit();
 
   // Append deals
   limit ? appendDeals(tableEl, deals.slice(0, limit)) : appendDeals(tableEl, deals);
@@ -82,21 +82,41 @@ export const deals = async function () {
   }
 
   // Fetch deals
-  async function fetchDeals(lang: string) {
-    try {
-      const res = await fetch('https://app.tentacle.se/api/public-deals', {
-        headers: {
-          referrer: 'https://app.tentacle.se',
-          'Content-Type': 'application/javascript',
-          'Accept-Language': lang,
-        },
-      });
-      const { data } = await res.json();
+  async function fetchDeals(lang: string, limit: number) {
+    let allDeals: Array<object> = [];
+    let page = 1;
 
-      return data;
-    } catch (err) {
-      console.error(err);
+    while (true) {
+      try {
+        const res = await fetch(`https://app.tentacle.se/api/public-deals?page=${page}`, {
+          headers: {
+            referrer: 'https://app.tentacle.se',
+            'Content-Type': 'application/javascript',
+            'Accept-Language': lang,
+          },
+        });
+
+        // if (res.status === 429) {
+        //   const secondsToWait = Number(res.headers.get('retry-after'));
+        //   await new Promise((resolve) => setTimeout(resolve, secondsToWait * 1000));
+
+        //   return fetchDeals(lang, limit);
+        // }
+
+        if (!res.ok) return;
+
+        const data = await res.json();
+
+        allDeals = [...allDeals, ...data.data];
+
+        if (data.meta.last_page === page || allDeals.length === limit) break;
+      } catch (err) {
+        console.error(err);
+      }
+      page++;
     }
+
+    return allDeals;
   }
 
   async function fetchDeal(id: string, lang: string) {

@@ -10,4 +10,4 @@ window.Webflow.push(() => {
   companyMetrics();
 });
 
-/*<script defer src="https://cdn.jsdelivr.net/gh/niklashansson/tentacle.se@20652faf1c3e0b6ae224ba6fc2f2f609a972784f/dist/index.min.js"></script>*/
+/*<script defer src="https://cdn.jsdelivr.net/gh/niklashansson/tentacle.se@6cec7c4e03805f3c8e57d96b204c70262c643fea/dist/index.min.js"></script>*/
