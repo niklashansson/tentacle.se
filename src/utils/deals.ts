@@ -188,10 +188,10 @@ export const deals = async function () {
     const propertyType = deal.property_types ? deal.property_types.join(', ') : undefined;
     const propertyTypeTitle = lang === 'sv' ? 'Fastighetsslag' : 'Property Type';
 
-    const indicativeYield = deal.yield_range ? deal.yield_range.join(' - ') + '%' : undefined;
+    const indicativeYield = undefined;
     const indicativeYieldTitle = lang === 'sv' ? 'Indikativ Yield' : 'Indicative Yield';
 
-    const operatingNet = undefined;
+    const operatingNet = deal.noi_range ? deal.noi_range.join(' - ') + ' Kr' : undefined;
     const operatingNetTitle = lang === 'sv' ? 'Driftnetto' : 'Operating Net';
 
     const exchangeableArea = undefined;
@@ -200,8 +200,8 @@ export const deals = async function () {
     values.push(
       { title: geographyTitle, value: geography, show: true },
       { title: propertyTypeTitle, value: propertyType, show: true },
-      { title: indicativeYieldTitle, value: indicativeYield, show: true },
-      { title: operatingNetTitle, value: operatingNet, show: false },
+      { title: indicativeYieldTitle, value: indicativeYield, show: false },
+      { title: operatingNetTitle, value: operatingNet, show: true },
       { title: exchangeableAreaTitle, value: exchangeableArea, show: false }
     );
 
