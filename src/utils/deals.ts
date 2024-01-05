@@ -27,7 +27,7 @@ export const deals = async function () {
   function appendDeals(tableEl, deals) {
     const geographyTitle = lang === 'sv' ? 'Geografi' : 'Geography';
     const propertyTypeTitle = lang === 'sv' ? 'Fastighetsslag' : 'Property Type';
-    const indicativeYieldTitle = lang === 'sv' ? 'Indikativ Yield' : 'Indicative Yield';
+    const noiTitle = lang === 'sv' ? 'Driftnetto' : 'Operating Net';
     const areaTitle = lang === 'sv' ? 'Area kvm' : 'Area sqm';
 
     deals.forEach((deal) => {
@@ -45,9 +45,9 @@ export const deals = async function () {
       }${deal.property_types.join(', ')}</td>
       <td class="deals-table_cell text-size-regular">${
         isMobile
-          ? `<span class="text-size-small text-color-grey">${indicativeYieldTitle}</span><br>`
+          ? `<span class="text-size-small text-color-grey">${noiTitle}</span><br>`
           : ''
-      }${deal.yield_range ? deal.yield_range.join(' - ') + '%' : '-'}</td>
+      }${deal.noi_range ? deal.noi_range.join(' - ') + ' kr' : '-'}</td>
       <td class="deals-table_cell text-size-regular">${
         isMobile ? `<span class="text-size-small text-color-grey">${areaTitle}</span><br>` : ''
       }${deal.sqm_range ? deal.sqm_range.map((sqm) => formatSqm(sqm)).join(' - ') : ''}</td>`;
