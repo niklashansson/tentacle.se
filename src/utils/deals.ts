@@ -27,8 +27,8 @@ export const deals = async function () {
   function appendDeals(tableEl, deals) {
     const geographyTitle = lang === 'sv' ? 'Geografi' : 'Geography';
     const propertyTypeTitle = lang === 'sv' ? 'Fastighetsslag' : 'Property Type';
-    const noiTitle = lang === 'sv' ? 'Driftnetto MSEK' : 'Operating Net MSEK';
-    const areaTitle = lang === 'sv' ? 'Area kvm' : 'Area sqm';
+    const noiTitle = lang === 'sv' ? 'Driftnetto (MSEK)' : 'Operating Net (MSEK)';
+    const areaTitle = lang === 'sv' ? 'Area (kvm)' : 'Area (sqm)';
 
     deals.forEach((deal) => {
       const noiRange = deal.noi_range;
@@ -46,10 +46,10 @@ export const deals = async function () {
           ? `<span class="text-size-small text-color-grey">${propertyTypeTitle}</span><br>`
           : ''
       }${deal.property_types.join(', ')}</td>
-      <td class="deals-table_cell text-size-regular">${
+      <td class="deals-table_cell">${
         isMobile ? `<span class="text-size-small text-color-grey">${noiTitle}</span><br>` : ''
       }${noi ? noi : '-'}</td>
-      <td class="deals-table_cell text-size-regular">${
+      <td class="deals-table_cell">${
         isMobile ? `<span class="text-size-small text-color-grey">${areaTitle}</span><br>` : ''
       }${deal.sqm_range ? deal.sqm_range.map((sqm) => formatSqm(sqm)).join(' - ') : ''}</td>`;
       tableEl.appendChild(tr);
@@ -194,7 +194,7 @@ export const deals = async function () {
 
     const noiRange = deal.noi_range;
     const noi = noiRange ? `${noiRange[0] / 1000000} - ${noiRange[1] / 1000000}` : undefined;
-    const noiTitle = lang === 'sv' ? 'Driftnetto MSEK' : 'Operating Net MSEK';
+    const noiTitle = lang === 'sv' ? 'Driftnetto (MSEK)' : 'Operating Net (MSEK)';
 
     const exchangeableArea = undefined;
     const exchangeableAreaTitle = lang === 'sv' ? 'Utbytbar Area' : 'Exchangeable Area';
