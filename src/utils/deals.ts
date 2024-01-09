@@ -31,6 +31,9 @@ export const deals = async function () {
     const areaTitle = lang === 'sv' ? 'Area kvm' : 'Area sqm';
 
     deals.forEach((deal) => {
+      const noiRange = deal.noi_range;
+      const noi = noiRange ? `${noiRange[0] / 1000000} - ${noiRange[1] / 1000000}` : undefined;
+
       const tr = document.createElement('tr');
       tr.classList.add(`deals-table_row`);
       tr.style.cursor = 'pointer';
@@ -44,10 +47,8 @@ export const deals = async function () {
           : ''
       }${deal.property_types.join(', ')}</td>
       <td class="deals-table_cell text-size-regular">${
-        isMobile
-          ? `<span class="text-size-small text-color-grey">${noiTitle}</span><br>`
-          : ''
-      }${deal.noi_range ? deal.noi_range.join(' - ') + ' kr' : '-'}</td>
+        isMobile ? `<span class="text-size-small text-color-grey">${noiTitle}</span><br>` : ''
+      }${noi ? noi : '-'}</td>
       <td class="deals-table_cell text-size-regular">${
         isMobile ? `<span class="text-size-small text-color-grey">${areaTitle}</span><br>` : ''
       }${deal.sqm_range ? deal.sqm_range.map((sqm) => formatSqm(sqm)).join(' - ') : ''}</td>`;
@@ -191,8 +192,9 @@ export const deals = async function () {
     const indicativeYield = undefined;
     const indicativeYieldTitle = lang === 'sv' ? 'Indikativ Yield' : 'Indicative Yield';
 
-    const operatingNet = deal.noi_range ? deal.noi_range.join(' - ') + ' Kr' : undefined;
-    const operatingNetTitle = lang === 'sv' ? 'Driftnetto' : 'Operating Net';
+    const noiRange = deal.noi_range;
+    const noi = noiRange ? `${noiRange[0] / 1000000} - ${noiRange[1] / 1000000}` : undefined;
+    const noiTitle = lang === 'sv' ? 'Driftnetto' : 'Operating Net';
 
     const exchangeableArea = undefined;
     const exchangeableAreaTitle = lang === 'sv' ? 'Utbytbar Area' : 'Exchangeable Area';
@@ -201,7 +203,7 @@ export const deals = async function () {
       { title: geographyTitle, value: geography, show: true },
       { title: propertyTypeTitle, value: propertyType, show: true },
       { title: indicativeYieldTitle, value: indicativeYield, show: false },
-      { title: operatingNetTitle, value: operatingNet, show: true },
+      { title: noiTitle, value: noi, show: true },
       { title: exchangeableAreaTitle, value: exchangeableArea, show: false }
     );
 
