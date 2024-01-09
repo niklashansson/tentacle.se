@@ -27,7 +27,7 @@ export const deals = async function () {
   function appendDeals(tableEl, deals) {
     const geographyTitle = lang === 'sv' ? 'Geografi' : 'Geography';
     const propertyTypeTitle = lang === 'sv' ? 'Fastighetsslag' : 'Property Type';
-    const noiTitle = lang === 'sv' ? 'Driftnetto' : 'Operating Net';
+    const noiTitle = lang === 'sv' ? 'Driftnetto MSEK' : 'Operating Net MSEK';
     const areaTitle = lang === 'sv' ? 'Area kvm' : 'Area sqm';
 
     deals.forEach((deal) => {
@@ -194,7 +194,7 @@ export const deals = async function () {
 
     const noiRange = deal.noi_range;
     const noi = noiRange ? `${noiRange[0] / 1000000} - ${noiRange[1] / 1000000}` : undefined;
-    const noiTitle = lang === 'sv' ? 'Driftnetto' : 'Operating Net';
+    const noiTitle = lang === 'sv' ? 'Driftnetto MSEK' : 'Operating Net MSEK';
 
     const exchangeableArea = undefined;
     const exchangeableAreaTitle = lang === 'sv' ? 'Utbytbar Area' : 'Exchangeable Area';
