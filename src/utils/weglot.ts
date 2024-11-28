@@ -2,7 +2,7 @@ import { closeDropdown } from '@finsweet/ts-utils';
 
 export const weglot = function () {
   Weglot.initialize({
-    api_key: 'wg_eb865823953fb8b9661a84bbd4af0cf94',
+    api_key: 'wg_b2c20877559e9c50f8efcef6f6c110511',
     // switchers: {
     //   hide_switcher: true,
     // },
